@@ -1,7 +1,7 @@
 import random
 import sys
 import pygame as pg
-WIDTH, HEIGHT = 1600, 900
+WIDTH, HEIGHT = 1200, 600
 delta = {  # 練習３：押下キーと移動量の辞書
     pg.K_UP: (0, -5),  # キー：移動量／値：（横方向移動量，縦方向移動量）
     pg.K_DOWN: (0, +5),
@@ -29,8 +29,20 @@ def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
+    kk_img = pg.image.load("ex02/fig/0.png")
+    kk_img = pg.image.load("ex02/fig/1.png")
+    kk_img = pg.image.load("ex02/fig/2.png")
     kk_img = pg.image.load("ex02/fig/3.png")
+    kk_img = pg.image.load("ex02/fig/4.png")
+    kk_img = pg.image.load("ex02/fig/5.png")
+    kk_img = pg.image.load("ex02/fig/6.png")
+    kk_img = pg.image.load("ex02/fig/7.png")
+    kk_img = pg.image.load("ex02/fig/8.png")
+    kk_img_9 = pg.image.load("ex02/fig/9.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    kk_img_9 = pg.transform.rotozoom(kk_img_9, 0, 2.0) 
+    kk_rct = kk_img_9.get_rect()
+
     kk_rct = kk_img.get_rect()  # 練習３：こうかとんSurfaceのRectを抽出する
     kk_rct.center = 900, 400  # 練習３：こうかとんの初期座標
     bb_img = pg.Surface((20, 20))   # 練習１：透明のSurfaceを作る
@@ -40,6 +52,7 @@ def main():
     bb_rct.centerx = random.randint(0, WIDTH)
     bb_rct.centery = random.randint(0, HEIGHT)
     vx, vy = +5, +5  # 練習２：爆弾の速度
+    
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -53,7 +66,12 @@ def main():
             if key_lst[k]:  # キーが押されたら
                 sum_mv[0] += tpl[0]
                 sum_mv[1] += tpl[1]
-        
+                
+            if kk_rct.colliderect(bb_rct):
+                
+                kk_img = kk_img_9
+                print("Game over")
+                
 
         screen.blit(bg_img, [0, 0])
         kk_rct.move_ip(sum_mv[0], sum_mv[1])
