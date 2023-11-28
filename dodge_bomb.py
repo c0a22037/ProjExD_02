@@ -10,6 +10,18 @@ delta = {  #3 方向キーの移動量の辞書
     pg.K_LEFT: (-5,0),
     pg.K_RIGHT: (+5, 0)
 }
+def check_bound(rct: pg.Rect)->tuple[bool, bool]:
+    """
+    オブジェクトが画面内or画面外を判定し　真理値タプルを返す関数
+    引数rct　こうかとんor爆弾Surfaceのrct
+    戻り値　横方向　縦方向はみ出し判定結果（画面内　True/画面外　False）
+    """
+    yoko, tate = True, False
+    if rct.left < 0 or WIDTH < rct.right:
+        yoko = False
+    if rct.top < 0 or WIDTH < rct.bottom:
+        tate = False
+    return yoko, tate
 
 
 def main():
@@ -33,6 +45,7 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
+        
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
         for k, tpl in delta.items():
@@ -41,8 +54,15 @@ def main():
                 sum_mv[1] += tpl[1]
         screen.blit(bg_img, [0, 0])
         kk_rct.move_ip(sum_mv[0], sum_mv[1])
+        if check_bound(kk_rct) != (True, True):
+            kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
         screen.blit(kk_img, kk_rct)  #練習3：こうかとんを移動させる
         bb_rct.move_ip(vx, vy)
+        yoko = check_bound(bb_rct)
+        if not yoko:
+            vx *= -1
+        if not tate:
+            vy *= -1
         screen.blit(bb_img, bb_rct)
         pg.display.update()
         tmr += 1
