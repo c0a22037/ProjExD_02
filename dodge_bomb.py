@@ -41,7 +41,7 @@ def main():
     kk_img_9 = pg.image.load("ex02/fig/9.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     kk_img_9 = pg.transform.rotozoom(kk_img_9, 0, 2.0) 
-    kk_rct = kk_img_9.get_rect()
+    kk_rct_9 = kk_img_9.get_rect()
 
     kk_rct = kk_img.get_rect()  # 練習３：こうかとんSurfaceのRectを抽出する
     kk_rct.center = 900, 400  # 練習３：こうかとんの初期座標
